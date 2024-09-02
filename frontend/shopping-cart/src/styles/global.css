@@ -1,0 +1,87 @@
+/* styles/global.css */
+
+/* Reset some default browser styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #333;
+    color: #fff;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 1rem;
+}
+
+.navbar-links {
+    display: flex;
+    list-style: none;
+}
+
+/* Footer Styling */
+.footer {
+    padding: 1rem;
+    text-align: center;
+    background-color: #f1f1f1;
+    color: #333;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Product Card Styling */
+.product-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-card h3 {
+    margin: 0.5rem 0;
+}
+
+.product-card p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+.btn-add-to-cart,
+.btn-delete {
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-add-to-cart {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Buttons hover effect */
+.btn-add-to-cart:hover {
+    background-color: #218838;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
