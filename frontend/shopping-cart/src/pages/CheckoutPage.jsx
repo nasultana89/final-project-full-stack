@@ -1,20 +1,33 @@
 
 import React, { useEffect, useState } from 'react';
-import { useCart } from '../context/CartContext'; // Use the Cart context
+import { useCart } from '../context/CartContext';
 
 const CheckoutPage = () => {
-  const { cart } = useCart(); // Access cart state
+  const { cart, updateCartQuantity } = useCart();
   const [totalAmount, setTotalAmount] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState('credit_card'); // Default payment method
 
   useEffect(() => {
-    // Calculate total amount whenever the cart changes
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     setTotalAmount(total);
   }, [cart]);
 
   const handleCheckout = () => {
-    console.log('Proceeding to checkout with cart:', cart);
-    // Further checkout logic goes here (e.g., creating an order)
+    // Create order object to send to the backend
+    const orderData = {
+      user: "user-id-here", // Replace with the actual user ID from context or authentication
+      products: cart.map(item => ({
+        product: item._id,
+        quantity: item.quantity,
+      })),
+      totalAmount,
+      paymentMethod, // Add selected payment method
+      status: 'pending',
+    };
+
+    console.log('Proceeding to checkout with order data:', orderData);
+    // Send the orderData to your backend using an API call here
+    // Example: await createOrder(orderData);
   };
 
   return (
@@ -24,13 +37,60 @@ const CheckoutPage = () => {
         <ul>
           {cart.map((item) => (
             <li key={item._id}>
-              {item.name} - ${item.price.toFixed(2)} x {item.quantity}
+              <span>{item.name} - ${item.price.toFixed(2)}</span>
+              <div>
+                <button onClick={() => updateCartQuantity(item._id, item.quantity - 1)}>
+                  -
+                </button>
+                <input
+                  type="number"
+                  value={item.quantity}
+                  onChange={(e) => updateCartQuantity(item._id, parseInt(e.target.value))}
+                  min="1"
+                  style={{ width: '50px', textAlign: 'center' }}
+                />
+                <button onClick={() => updateCartQuantity(item._id, item.quantity + 1)}>
+                  +
+                </button>
+              </div>
             </li>
           ))}
         </ul>
       ) : (
         <p>No items in the cart</p>
       )}
+
+      <h3>Select Payment Method:</h3>
+      <div>
+        <label>
+          <input
+            type="radio"
+            value="credit_card"
+            checked={paymentMethod === 'credit_card'}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          />
+          Credit Card
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="paypal"
+            checked={paymentMethod === 'paypal'}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          />
+          PayPal
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="cash_on_delivery"
+            checked={paymentMethod === 'cash_on_delivery'}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          />
+          Cash on Delivery
+        </label>
+      </div>
+
       <p>Total: ${totalAmount.toFixed(2)}</p>
       <button onClick={handleCheckout}>Place Order</button>
     </div>
