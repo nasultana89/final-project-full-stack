@@ -15,7 +15,7 @@ const CheckoutPage = () => {
   const handleCheckout = () => {
     // Create order object to send to the backend
     const orderData = {
-      user: "user-id-here", // Replace with the actual user ID from context or authentication
+      user: "user-id-here", 
       products: cart.map(item => ({
         product: item._id,
         quantity: item.quantity,
@@ -26,8 +26,8 @@ const CheckoutPage = () => {
     };
 
     console.log('Proceeding to checkout with order data:', orderData);
-    // Send the orderData to your backend using an API call here
-    // Example: await createOrder(orderData);
+    
+   
   };
 
   return (
